@@ -12,7 +12,7 @@ vector<vector<int>> generate_adjacency_matrix(int size) {
 
     for (int i = 0; i < size; ++i) {
         for (int j = i + 1; j < size; ++j) {
-            int edge = rand() % 2; 
+            int edge = rand() % 2;
             matrix[i][j] = edge;
             matrix[j][i] = edge; 
         }
@@ -21,10 +21,12 @@ vector<vector<int>> generate_adjacency_matrix(int size) {
     return matrix;
 }
 
-// Функция для анализа вершин (изолированные, концевые, доминирующие)
+// Функция для анализа вершин
 void analyze_vertices(const vector<vector<int>>& matrix) {
     int size = matrix.size();
     vector<int> isolated, terminal, dominant;
+
+    cout << "Степени вершин (deg(v_i)):" << endl;
 
     for (int i = 0; i < size; ++i) {
         int degree = 0;  
@@ -34,17 +36,24 @@ void analyze_vertices(const vector<vector<int>>& matrix) {
             }
         }
 
+        // Вывод степени вершины
+        cout << "deg(v_" << i << ") = " << degree << endl;
+
+        
         if (degree == 0) {
             isolated.push_back(i);
         }
+       
         else if (degree == 1) {
             terminal.push_back(i);
         }
+
         else if (degree == size - 1) {
             dominant.push_back(i);
         }
     }
 
+    // Вывод результатов
     cout << "Изолированные вершины: ";
     for (int v : isolated) cout << v << " ";
     cout << endl;
@@ -72,22 +81,25 @@ int main() {
 
     setlocale(LC_ALL, "Russian");
 
+   
     srand(static_cast<unsigned int>(time(0)));
 
+  
     int size;
     cout << "Введите количество вершин графа: ";
     cin >> size;
 
-    // Генерация матрицы смежности
+    
     vector<vector<int>> adjacency_matrix = generate_adjacency_matrix(size);
 
     // Вывод матрицы смежности
     cout << "Матрица смежности графа:" << endl;
     print_matrix(adjacency_matrix);
 
-    // Вывод размера графа
+   
     cout << "Размер графа (количество вершин): " << size << endl;
 
+    
     analyze_vertices(adjacency_matrix);
 
     return 0;
